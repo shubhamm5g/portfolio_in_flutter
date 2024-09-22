@@ -1,0 +1,1 @@
+double kMinDesktopWidth = 600;
