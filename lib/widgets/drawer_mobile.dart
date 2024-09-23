@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../consts/consts.dart';
 
 class DrawerMobile extends StatelessWidget {
-  const DrawerMobile({super.key});
-
+  const DrawerMobile({super.key, required this.onNavTap});
+  final Function(int) onNavTap;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,7 +31,9 @@ class DrawerMobile extends StatelessWidget {
                   fontSize: 16),
               leading: Icon(navIcons[i]),
               title: Text(navTitles[i]),
-              onTap: () {},
+              onTap: () {
+                onNavTap(i);
+              },
             )
         ],
       ),

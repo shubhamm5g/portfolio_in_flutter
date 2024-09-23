@@ -22,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final scrollController = ScrollController();
+  final List<GlobalKey> navbarkeys = List.generate(4, (index) => GlobalKey());
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -32,66 +34,97 @@ class _HomeScreenState extends State<HomeScreen> {
           key: scaffoldKey,
           endDrawer: (constraints.maxWidth >= kMinDesktopWidth)
               ? null
-              : const DrawerMobile(),
-          backgroundColor: CustomColors.scaffoldBg,
-          body: ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              // main
-              if (constraints.maxWidth >= kMinDesktopWidth)
-                const HeaderDesktop()
-              else
-                HeaderMobile(
-                  onMenuTap: () {
-                    scaffoldKey.currentState?.openEndDrawer();
+              : DrawerMobile(
+                  onNavTap: (int navIndex) {
+                    scaffoldKey.currentState?.closeEndDrawer();
+                    scollToSection(navIndex);
                   },
                 ),
-              if (constraints.maxWidth >= kMinDesktopWidth)
-                const MainDesktop()
-              else
-                const MainMobile(),
+          backgroundColor: CustomColors.scaffoldBg,
+          body: SingleChildScrollView(
+            controller: scrollController,
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                // main
+                SizedBox(key: navbarkeys.first),
+                if (constraints.maxWidth >= kMinDesktopWidth)
+                  HeaderDesktop(onNavTap: (int navIndex) {
+                    scollToSection(navIndex);
+                  })
+                else
+                  HeaderMobile(
+                    onMenuTap: () {
+                      scaffoldKey.currentState?.openEndDrawer();
+                    },
+                  ),
+                if (constraints.maxWidth >= kMinDesktopWidth)
+                  const MainDesktop()
+                else
+                  const MainMobile(),
 
-              // skills
-              Container(
-                width: screenWidth,
-                padding: const EdgeInsets.fromLTRB(25, 20, 25, 20),
-                color: CustomColors.bgLight1,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    //titles
+                // skills
+                Container(
+                  key: navbarkeys[1],
+                  width: screenWidth,
+                  padding: const EdgeInsets.fromLTRB(25, 20, 25, 20),
+                  color: CustomColors.scaffoldBg,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      //titles
 
-                    const HeadingTitle(text: "What can I do?"),
-                    const SizedBox(
-                      height: 50,
+                      const HeadingTitle(text: "What can I do?"),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      // skills and platforms
+                      (constraints.maxWidth >= kMidDesktopWidth)
+                          ? const SkillsDesktop()
+                          : const SkillsMobile(),
+                    ],
+                  ),
+                ), // project
+                ProjectSection(
+                  key: navbarkeys[2],
+                ), // contacts
+                const SizedBox(height: 30),
+                Container(
+                  key: navbarkeys[3],
+                  padding: const EdgeInsets.fromLTRB(25, 20, 25, 60),
+                  color: CustomColors.bgLight1,
+                  child: const Column(
+                    children: [
+                      HeadingTitle(text: "Get in touch"),
+                    ],
+                  ),
+                ), //footer
+                Container(
+                  height: 60,
+                  width: screenWidth,
+                  color: CustomColors.scaffoldBg,
+                  child: const Center(
+                    child: Text(
+                      "Made by Shubham Maurya with Flutter ",
+                      style:
+                          TextStyle(fontSize: 16, color: CustomColors.bgLight2),
                     ),
-                    // skills and platforms
-                    (constraints.maxWidth >= kMidDesktopWidth)
-                        ? const SkillsDesktop()
-                        : const SkillsMobile(),
-                  ],
-                ),
-              ), // project
-              const ProjectSection(), // contacts
-              const SizedBox(height: 30),
-              Container(
-                padding: const EdgeInsets.fromLTRB(25, 20, 25, 60),
-                color: CustomColors.bgLight1,
-                child: const Column(
-                  children: [
-                    HeadingTitle(text: "Get in touch"),
-                  ],
-                ),
-              ), //footer
-              Container(
-                height: 500,
-                width: double.maxFinite,
-                color: Colors.blueGrey,
-              )
-            ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       );
     });
+  }
+
+  void scollToSection(int navIndex) {
+    if (navIndex == 4) {
+      return;
+    }
+    final key = navbarkeys[navIndex];
+    Scrollable.ensureVisible(key.currentContext!,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 }
