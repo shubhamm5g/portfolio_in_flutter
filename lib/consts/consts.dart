@@ -1,4 +1,4 @@
-export '../consts/Lists.dart';
-export '../consts/Colors.dart';
-export '../consts/Size.dart';
-export '../consts/Styles.dart';
+export '../consts/lists.dart';
+export '../consts/colors.dart';
+export '../consts/size.dart';
+export '../consts/styles.dart';

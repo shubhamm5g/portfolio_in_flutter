@@ -20,3 +20,19 @@ class SiteLogo extends StatelessWidget {
     );
   }
 }
+
+class HeadingTitle extends StatelessWidget {
+  final String text;
+
+  const HeadingTitle({super.key, required this.text});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: CustomColors.whitePrimary),
+    );
+  }
+}

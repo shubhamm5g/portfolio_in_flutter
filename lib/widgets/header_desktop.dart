@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../consts/consts.dart';
-import 'package:portfolio_in_flutter/widgets/site_logo.dart';
+import 'package:portfolio_in_flutter/widgets/common_widgets.dart';
 
 class HeaderDesktop extends StatelessWidget {
   const HeaderDesktop({super.key});

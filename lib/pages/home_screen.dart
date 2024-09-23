@@ -1,12 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:portfolio_in_flutter/consts/consts.dart';
+import 'package:portfolio_in_flutter/utils/projects_utils.dart';
+import 'package:portfolio_in_flutter/widgets/common_widgets.dart';
 import 'package:portfolio_in_flutter/widgets/drawer_mobile.dart';
 import 'package:portfolio_in_flutter/widgets/header_desktop.dart';
 import 'package:portfolio_in_flutter/widgets/header_mobile.dart';
 import 'package:portfolio_in_flutter/widgets/main_desktop.dart';
 import 'package:portfolio_in_flutter/widgets/main_mobile.dart';
+import 'package:portfolio_in_flutter/widgets/skills_desktop.dart';
+import 'package:portfolio_in_flutter/widgets/skills_mobile.dart';
+
+import '../widgets/project_card_widget.dart';
+import '../widgets/project_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,48 +34,61 @@ class _HomeScreenState extends State<HomeScreen> {
               ? null
               : const DrawerMobile(),
           backgroundColor: CustomColors.scaffoldBg,
-          body: Container(
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                // main
-                if (constraints.maxWidth >= kMinDesktopWidth)
-                  const HeaderDesktop()
-                else
-                  HeaderMobile(
-                    onMenuTap: () {
-                      scaffoldKey.currentState?.openEndDrawer();
-                    },
-                  ),
-                if (constraints.maxWidth >= kMinDesktopWidth)
-                  MainDesktop()
-                else
-                  MainMobile(),
-                // MainDesktop(),
+          body: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              // main
+              if (constraints.maxWidth >= kMinDesktopWidth)
+                const HeaderDesktop()
+              else
+                HeaderMobile(
+                  onMenuTap: () {
+                    scaffoldKey.currentState?.openEndDrawer();
+                  },
+                ),
+              if (constraints.maxWidth >= kMinDesktopWidth)
+                const MainDesktop()
+              else
+                const MainMobile(),
 
-                // skills
-                Container(
-                  height: 500,
-                  width: double.maxFinite,
-                  color: Colors.blueGrey,
-                ), // project
-                Container(
-                  height: 500,
-                  width: double.maxFinite,
-                  color: Colors.blueGrey,
-                ), // contacts
-                Container(
-                  height: 500,
-                  width: double.maxFinite,
-                  color: Colors.blueGrey,
-                ), //footer
-                Container(
-                  height: 500,
-                  width: double.maxFinite,
-                  color: Colors.blueGrey,
-                )
-              ],
-            ),
+              // skills
+              Container(
+                width: screenWidth,
+                padding: const EdgeInsets.fromLTRB(25, 20, 25, 20),
+                color: CustomColors.bgLight1,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //titles
+
+                    const HeadingTitle(text: "What can I do?"),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    // skills and platforms
+                    (constraints.maxWidth >= kMidDesktopWidth)
+                        ? const SkillsDesktop()
+                        : const SkillsMobile(),
+                  ],
+                ),
+              ), // project
+              const ProjectSection(), // contacts
+              const SizedBox(height: 30),
+              Container(
+                padding: const EdgeInsets.fromLTRB(25, 20, 25, 60),
+                color: CustomColors.bgLight1,
+                child: const Column(
+                  children: [
+                    HeadingTitle(text: "Get in touch"),
+                  ],
+                ),
+              ), //footer
+              Container(
+                height: 500,
+                width: double.maxFinite,
+                color: Colors.blueGrey,
+              )
+            ],
           ),
         ),
       );
