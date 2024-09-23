@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../consts/consts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SiteLogo extends StatelessWidget {
   final VoidCallback? onTap;
@@ -34,5 +35,19 @@ class HeadingTitle extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: CustomColors.whitePrimary),
     );
+  }
+}
+
+Future<void> openLinkInApp(String url) async {
+  // Mobile/desktop logic
+  await openAppLink(url);
+}
+
+Future<void> openAppLink(String url) async {
+  // Use url_launcher for mobile and desktop
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

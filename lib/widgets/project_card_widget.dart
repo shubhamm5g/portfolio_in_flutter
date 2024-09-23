@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_in_flutter/utils/projects_utils.dart';
-import "dart:js" as js;
+import 'package:portfolio_in_flutter/widgets/common_widgets.dart';
 import '../consts/consts.dart';
 
 class ProjectCardWidget extends StatelessWidget {
@@ -67,7 +67,7 @@ class ProjectCardWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: InkWell(
                       onTap: () {
-                        js.context.callMethod("open", [project.androidLink]);
+                        openLinkInApp(project.androidLink!);
                       },
                       child: Image.asset(
                         "assets/images/mobile_development_logo.png",
@@ -80,7 +80,7 @@ class ProjectCardWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: InkWell(
                       onTap: () {
-                        js.context.callMethod("open", [project.iosLink]);
+                        openLinkInApp(project.iosLink!);
                       },
                       child: Image.asset(
                         "assets/images/apple_logo.png",
@@ -93,7 +93,7 @@ class ProjectCardWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: InkWell(
                       onTap: () {
-                        js.context.callMethod("open", [project.webLink]);
+                        openLinkInApp(project.webLink!);
                       },
                       child: Image.asset(
                         "assets/images/website_development_logo.png",

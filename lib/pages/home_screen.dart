@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_in_flutter/consts/consts.dart';
-import 'package:portfolio_in_flutter/utils/projects_utils.dart';
 import 'package:portfolio_in_flutter/widgets/common_widgets.dart';
 import 'package:portfolio_in_flutter/widgets/drawer_mobile.dart';
 import 'package:portfolio_in_flutter/widgets/header_desktop.dart';
@@ -9,8 +8,6 @@ import 'package:portfolio_in_flutter/widgets/main_desktop.dart';
 import 'package:portfolio_in_flutter/widgets/main_mobile.dart';
 import 'package:portfolio_in_flutter/widgets/skills_desktop.dart';
 import 'package:portfolio_in_flutter/widgets/skills_mobile.dart';
-
-import '../widgets/project_card_widget.dart';
 import '../widgets/project_widget.dart';
 
 class HomeScreen extends StatefulWidget {
